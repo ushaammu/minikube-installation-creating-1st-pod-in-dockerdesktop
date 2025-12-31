@@ -1,0 +1,1 @@
+# minikube-installation-creating-1st-pod-in-dockerdesktop
