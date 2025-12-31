@@ -1,0 +1,64 @@
+1.firstly install minikube from browser....open the links give below...nxt install kubectl
+
+
+# 2. Download kubectl (stable version)
+Invoke-WebRequest -Uri "https://dl.k8s.io/release/v1.34.1/bin/windows/amd64/kubectl.exe" -OutFile "$HOME\bin\kubectl.exe"
+
+# 3. Download minikube (latest stable)
+Invoke-WebRequest -Uri "https://storage.googleapis.com/minikube/releases/latest/minikube-windows-amd64.exe" -OutFile "$HOME\bin\minikube.exe"
+
+# 4. Create a bin folder in your user directory (if not exists)
+mkdir $HOME\bin
+
+
+# 5. Add the bin folder to PATH for the current session
+$env:Path += ";$HOME\bin"
+  
+# 6. Check kubectl client version
+kubectl version --client
+
+# 7. Move minikube.exe to bin (if not already moved)
+Move-Item $HOME\Downloads\minikube.exe $HOME\bin\
+
+# 8. Verify files in bin
+dir $HOME\bin
+
+# 9. Delete any existing minikube cluster
+& "$HOME\bin\minikube.exe" delete --all
+
+# 10 Pull minikube base image
+docker pull gcr.io/k8s-minikube/kicbase:v0.0.48
+
+# 11. Start minikube with Docker driver
+& "$HOME\bin\minikube.exe" start --driver=docker
+
+# 12. Check minikube status
+& "$HOME\bin\minikube.exe" status
+
+# 13.Open Kubernetes dashboard
+& "$HOME\bin\minikube.exe" dashboard
+
+# 14.Check cluster info
+kubectl cluster-info
+
+# 15.List nodes
+kubectl get nodes
+
+# 16.Apply pod YAML
+kubectl apply -f pod.yaml
+
+# 17.Check pods
+kubectl get pods
+
+# 18.Describe pod
+kubectl describe pod my-pod
+
+# 19.Apply another pod YAML (adjust path if needed)
+kubectl apply -f "C:\Users\USHA CT\path-to\pod-without-port-label.yaml"
+
+# 20List all pods in the default namespace (basic view)
+kubectl get pods
+
+# 21.List all pods with detailed information (including node, IP, and more)
+kubectl get pods -o wide
+
